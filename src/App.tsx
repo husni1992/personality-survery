@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import classNames from "classnames";
 import "./App.css";
 import { questions } from "./data";
 
@@ -7,6 +8,7 @@ const ENDPOINT = "https://qx24vjuooi.execute-api.us-east-1.amazonaws.com/dev";
 
 function App() {
   const [name, setName] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const [password, setPassword] = useState("");
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
@@ -17,6 +19,10 @@ function App() {
   };
 
   const handleSubmit = async () => {
+    if (loading) return;
+
+    setLoading(true);
+
     const selectedValues = questions
       .filter((question) => selectedItems.includes(question.key))
       .map((item) => item.value);
@@ -36,15 +42,34 @@ function App() {
         },
       });
 
+      if (response.data.statusCode === 403) {
+        alert(`Failed: Invalid password`);
+        return;
+      }
+
       if (response.data.statusCode === 200) {
         alert(`Success`);
       } else {
         alert("Failed");
       }
+
+      setLoading(false);
     } catch (error) {
       alert("Failed to submit data.");
+
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
+
+  const isBtnEnabled =
+    name != "" && password != "" && !loading && selectedItems.length > 0;
+
+  const submitBtnClassNames = classNames("submit-button-enabled", {
+    "submit-button-disabled":
+      name == "" || password == "" || !selectedItems.length,
+  });
 
   return (
     <div className="App">
@@ -78,8 +103,13 @@ function App() {
             <label htmlFor={`question-${key}`}>{value}</label>
           </div>
         ))}
-        <button type="button" onClick={handleSubmit} className="submit-button">
-          Submit Answers
+        <button
+          type="button"
+          onClick={handleSubmit}
+          className={submitBtnClassNames}
+          disabled={!isBtnEnabled}
+        >
+          {loading ? "Loading..." : "Submit Answers"}
         </button>
       </>
     </div>

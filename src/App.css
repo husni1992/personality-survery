@@ -51,7 +51,7 @@ h1 {
   flex: 1;
 }
 
-.submit-button {
+.submit-button-enabled {
   display: block;
   margin: 20px auto;
   padding: 10px 20px;
@@ -61,6 +61,17 @@ h1 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.submit-button-disabled{
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #e50f0f;
+  color: white;
+  border: none;
+  border-radius: 5px;
 }
 
 @media (max-width: 600px) {
