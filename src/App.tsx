@@ -1,22 +1,18 @@
-import { useState } from 'react';
-import './App.css';
-import { questions } from './data';
+import { useState } from "react";
+import axios from "axios";
+import "./App.css";
+import { questions } from "./data";
 
-type Question = {
-  key: string;
-  value: string;
-}
+const ENDPOINT = "https://qx24vjuooi.execute-api.us-east-1.amazonaws.com/dev";
 
 function App() {
-  const [name, setName] = useState<string>('');
+  const [name, setName] = useState<string>("");
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isNameSubmitted, setIsNameSubmitted] = useState<boolean>(false);
 
   const handleCheckboxChange = (key: string) => {
-    setSelectedItems(prev =>
-      prev.includes(key)
-        ? prev.filter(item => item !== key)
-        : [...prev, key]
+    setSelectedItems((prev) =>
+      prev.includes(key) ? prev.filter((item) => item !== key) : [...prev, key]
     );
   };
 
@@ -24,21 +20,41 @@ function App() {
     setIsNameSubmitted(true);
   };
 
-  const handleSubmit = () => {
-    const selectedValues = questions.filter(question => selectedItems.includes(question.key));
-    console.log("User Name:", name);
-    console.log("Selected items:", selectedValues);
-    alert(`User ${name} selected ${selectedValues.length} items. ${JSON.stringify(selectedValues, null, 2)}`);
+  const handleSubmit = async () => {
+    const selectedValues = questions
+      .filter((question) => selectedItems.includes(question.key))
+      .map((item) => item.value);
+
+    const data = {
+      name,
+      selectedValues,
+    };
+
+    console.log(data);
+
+    try {
+      await axios.post(ENDPOINT, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      alert(`Success`);
+    } catch (error) {
+      alert("Failed to submit data.");
+    }
   };
 
   return (
     <div className="App">
       <h1>Personality Quiz</h1>
       {!isNameSubmitted ? (
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          e.stopPropagation()
-        }}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+        >
           <div className="name-form">
             <label htmlFor="name">Enter your name:</label>
             <input
@@ -47,7 +63,12 @@ function App() {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <button type="button" style={{width: 200}} onClick={handleNameSubmit} className="submit-button">
+            <button
+              type="button"
+              style={{ width: 200 }}
+              onClick={handleNameSubmit}
+              className="submit-button"
+            >
               Start
             </button>
           </div>
@@ -65,7 +86,11 @@ function App() {
               <label htmlFor={`question-${key}`}>{value}</label>
             </div>
           ))}
-          <button type="button" onClick={handleSubmit} className="submit-button">
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className="submit-button"
+          >
             Submit Answers
           </button>
         </form>

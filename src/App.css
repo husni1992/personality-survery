@@ -37,6 +37,7 @@ h1 {
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
+  cursor: pointer;
 }
 
 .question-item input[type="checkbox"] {
