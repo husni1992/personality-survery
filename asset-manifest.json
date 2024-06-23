@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/personality-survery/static/css/main.f6fc5fb9.css",
+    "main.css": "/personality-survery/static/css/main.ed23816d.css",
     "main.js": "/personality-survery/static/js/main.e668e241.js",
     "static/js/453.7e0dd992.chunk.js": "/personality-survery/static/js/453.7e0dd992.chunk.js",
     "index.html": "/personality-survery/index.html",
-    "main.f6fc5fb9.css.map": "/personality-survery/static/css/main.f6fc5fb9.css.map",
+    "main.ed23816d.css.map": "/personality-survery/static/css/main.ed23816d.css.map",
     "main.e668e241.js.map": "/personality-survery/static/js/main.e668e241.js.map",
     "453.7e0dd992.chunk.js.map": "/personality-survery/static/js/453.7e0dd992.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f6fc5fb9.css",
+    "static/css/main.ed23816d.css",
     "static/js/main.e668e241.js"
   ]
 }
