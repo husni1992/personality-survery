@@ -56,14 +56,14 @@ h1 {
   margin: 20px auto;
   padding: 10px 20px;
   font-size: 18px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.submit-button-disabled{
+.submit-button-disabled {
   display: block;
   margin: 20px auto;
   padding: 10px 20px;
@@ -72,6 +72,12 @@ h1 {
   color: white;
   border: none;
   border-radius: 5px;
+}
+
+.submit-button-disabled:disabled {
+  pointer-events: none; /* Disable click events */
+  opacity: 0.5; /* Style for visibility */
+  /* Remove ripple effect by overriding styles */
 }
 
 @media (max-width: 600px) {
